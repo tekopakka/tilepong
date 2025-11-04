@@ -1,6 +1,7 @@
 import pygame
 from player import Player
 from ball import Ball
+from target import Target
 
 def run():
     pygame.init()
@@ -8,8 +9,10 @@ def run():
     clock = pygame.time.Clock()
     running = True
 
+    target = Target()
+    target.generate_tiles()
     player = Player()
-    ball = Ball(player)
+    ball = Ball(player, target)
 
     while running:
         screen.fill("white")
@@ -25,6 +28,7 @@ def run():
         ball.move()
         player.draw_player(screen)
         ball.draw_ball(screen)
+        target.draw_tile_grid(screen)
 
         if ball.y > 700:
             print("GAME OVER")
