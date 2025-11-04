@@ -11,7 +11,21 @@ class Player:
             "x": 0,
             "y": 0
         }
-        
+
+    def handle_movement(self, event):
+        dx = 0
+        if event.type == pygame.KEYDOWN:
+            if event.key==pygame.K_LEFT:
+                dx = -5
+            if event.key==pygame.K_RIGHT:
+                dx = 5
+        if event.type == pygame.KEYUP:
+            if event.key==pygame.K_LEFT:
+                dx = 0
+            if event.key==pygame.K_RIGHT:
+                dx = 0
+        self.moving["x"] = dx
+
     def move(self):
         if (self.x + self.moving["x"]) > 0 and (self.x + self.moving["x"] < 1280):
             self.x += self.moving["x"]

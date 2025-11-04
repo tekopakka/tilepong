@@ -18,19 +18,8 @@ def run():
             if event.type == pygame.QUIT:
                 running = False
 
-            dx = 0
-            if event.type == pygame.KEYDOWN:
-                if event.key==pygame.K_LEFT:
-                    dx = -5
-                if event.key==pygame.K_RIGHT:
-                    dx = 5
-            if event.type == pygame.KEYUP:
-                if event.key==pygame.K_LEFT:
-                    dx = 0
-                if event.key==pygame.K_RIGHT:
-                    dx = 0
-            player.moving["x"] = dx
-        
+            if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
+                player.handle_movement(event)        
 
         player.move()
         ball.move()

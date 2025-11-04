@@ -9,7 +9,7 @@ class Ball:
         self.color = (0,255,0)
         self.moving = {
             "x": 2,
-            "y": -2
+            "y": 4
         }
         self.player = player
         
@@ -38,9 +38,27 @@ class Ball:
         if self.collision_y():
             self.moving["y"] *= -1
         elif self.collision_player():
-            print("Collision player")
             self.moving["y"] *= -1
-        
+            hitspot = self.x - (self.player.x + self.player.width/2)
+            print(hitspot)
+            print(abs(hitspot))
+            if hitspot == 0:
+                print("Middle shot")
+            elif abs(hitspot) < 10:
+                self.moving["x"] += abs(hitspot)/hitspot
+            elif abs(hitspot) >= 10 and abs(hitspot) <= 30:
+                multiplier = 2
+                if self.moving["x"] > 0 and hitspot < 0 \
+                or self.moving["x"] < 0 and hitspot > 0:
+                    multiplier = 4
+                self.moving["x"] += multiplier*abs(hitspot)/hitspot
+            elif abs(hitspot) >= 30 and abs(hitspot) < 50:
+                multiplier = 3
+                if self.moving["x"] > 0 and hitspot < 0 \
+                or self.moving["x"] < 0 and hitspot > 0:
+                    multiplier = 6
+                self.moving["x"] += multiplier*abs(hitspot)/hitspot
     
+            print("Ball speed", self.moving["x"])
     def draw_ball(self, screen):
         pygame.draw.circle(screen, self.color, (self.x, self.y), self.radius, width=0)
